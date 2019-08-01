@@ -1,0 +1,25 @@
+<table *ngIf="stocks">
+  <tr class="table-header">
+    <td *ngFor="let column of columns"
+        (click)="orderToggleBy(column.name)"
+        [class.sortedDesc]="isSortedBy(column.name)"
+        [class.sortedAsc]="isReverseSortedBy(column.name)">
+      <h2>{{column.label}}</h2>
+   </td>
+  </tr>
+  <tr *ngFor="let stock of stocks">
+    <td class="table-symbol">{{ stock.stockSymbol }}</td>
+    <td class="table-company"><a [href]="stock.website" target="_blank">{{ stock.name }}</a></td>
+    <td>{{ stock.price | currency }}</td>
+    <td [ngClass]="{
+      'positiveValue': (stock.change > 0),
+      'zeroValue': (stock.change === 0),
+      'negitiveValue': (stock.change < 0)
+    }">{{ stock.change | number:'1.2-2' }}</td>
+    <td [ngClass]="{
+      'positiveValue': (stock.percent > 0),
+      'zeroValue': (stock.percent === 0),
+      'negitiveValue': (stock.percent < 0)
+    }">{{ stock.percent | number:'1.2-2' }}%</td>
+  </tr>
+</table>
